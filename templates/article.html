@@ -1,0 +1,137 @@
+{% extends "base.html" %}
+{% block content %}
+
+    {#    article header : title, photo author, #}
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-sm-12">
+                <p class="text-uppercase font-weight-bold">
+                    <a class="text-danger" href="#">{{ artcle.art.tags }}</a>
+                </p>
+                <h3 class="display-4 secondfont mb-3 font-weight-bold">{{ artcle.art.title }}</h3>
+                <p class="mb-3 text-center" >
+                    {{ artcle.art.title_caption }}
+                </p>
+                <img src="{{ artcle.art.picture.url }}" class="align-content-center" height="60%" width="90%">
+
+            </div>
+        </div>
+    </div>
+    <div class="container" style="margin-top: -10%">
+        <div class="jumbotron jumbotron-fluid mb-3 pl-0 pt-0 pb-0 bg-white position-relative">
+            <div class="h-100 tofront">
+                <div class="row justify-content-between">
+                    <div class="col-md-6 pt-6 pb-6 pr-6 align-self-center">
+                        <div class="d-flex align-items-center">
+                            <img class="rounded-circle" src="{{ artcle.art.author.profile_picture.url }}" width="70">
+
+                            <small class="ml-2">{{ artcle.art.author.user.first_name }} {{ artcle.art.author.user.last_name }}
+                                <span class="text-muted d-block">{{ artcle.art.date_created }}</span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Header -->
+
+    <div class="container pt-4 pb-4">
+        <div class="row justify-content-center">
+            <div class="col-lg-2 pr-4 mb-4 col-md-12">
+                <div class="sticky-top text-center">
+                    <div class="text-muted">
+                        सयेर गर्नुहोला
+                    </div>
+                    <div class="share d-inline-block">
+                        <!-- AddToAny BEGIN -->
+                        <div class="a2a_kit a2a_kit_size_32 a2a_default_style">
+                            <a class="a2a_dd" href="https://www.addtoany.com/share"></a>
+                            <a class="a2a_button_facebook"></a>
+                            <a class="a2a_button_twitter"></a>
+                        </div>
+                        <script async src="https://static.addtoany.com/menu/page.js"></script>
+                        <!-- AddToAny END -->
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 col-lg-8">
+                <article class="article-post">
+                    {%  for a in artcle.prg %}
+                    <p>
+                            {{ a }}
+                    </p>
+                    {% endfor %}
+                </article>
+                <div class="border p-5 bg-lightblue">
+                    <div class="row justify-content-between">
+                        <div class="col-md-5 mb-2 mb-md-0">
+                            <h5 class="font-weight-bold secondfont">मेम्बेर को लागि</h5>
+                            ताजा र रोचक समचार को लागि कृपया आफ्नो इमेल रख्दिनुहोला |
+                        </div>
+                        <div class="col-md-7">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="text" class="form-control" placeholder="Enter your e-mail address">
+                                </div>
+                                <div class="col-md-12 mt-2">
+                                    <button type="submit" class="btn btn-success btn-block">Subscribe</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container pt-4 pb-4">
+        <h5 class="font-weight-bold spanborder"><span>थप पद्द्नुह्होस</span></h5>
+        <div class="row">
+            <div class="col-lg-6">
+                {% for key, value in next_post.items %}
+                    {% if key == 'left' %}
+                        <div class="card border-0 mb-4 box-shadow h-xl-300">
+                            <div style="background-image: url({{ value.picture.url }}); height: 150px; background-size: cover; background-repeat: no-repeat;">
+                            </div>
+                            <div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+                                <h2 class="h4 font-weight-bold">
+                                    <a class="text-dark" href="{% url 'article' value.id %}">{{ value.title }}</a>
+                                </h2>
+                                <p class="card-text">
+                                    {{ value.title_caption }}
+                                </p>
+                                <div>
+                                    <small class="d-block"><a
+                                            class="text-muted">{{ value.author.user.first_name }} {{ value.author.user.last_name }}</a></small>
+                                    <small class="text-muted">{{ value.date_created }}</small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="col-lg-6">
+                <div class="flex-md-row mb-4 box-shadow h-xl-300">
+                    {% for key, value in next_post.items %}
+                        {% if key == 'right1' or key == 'right2' or key == 'right3' %}
+                            <div class="mb-3 d-flex align-items-center">
+                                <img height="80" src="{{ value.picture.url }}">
+                                <div class="pl-3">
+                                    <h2 class="mb-2 h6 font-weight-bold">
+                                        <a class="text-dark" href="{% url 'article' value.id %}">{{ value.title }}</a>
+                                    </h2>
+                                    <div class="card-text text-muted small">
+                                        {{ value.title_caption }}
+                                    </div>
+                                    <small class="text-muted">{{ value.date_created }}</small>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock content %}

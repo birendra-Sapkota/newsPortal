@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+        {% for article in articles %}
+            <div class="row justify-content-between">
+                <div class="col-md-8">
+                    <div class="mb-3 d-flex justify-content-between">
+                        <div class="pr-3">
+                            <h2 class="mb-1 h4 font-weight-bold">
+                                <a class="text-dark" href="{% url 'article' article.id %}">{{ article.title }}</a>
+                            </h2>
+                            <p>
+                                {{ article.title_caption }}
+                            </p>
+                            <div class="card-text text-muted small">
+                                {{ article.author.user.first_name }} {{ article.author.user.last_name }}
+                            </div>
+                            <small class="text-muted">{{ article.date_created }}</small>
+                        </div>
+                        <img height="120" src="{{ article.picture.url }}">
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock content %}

@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!--------------------------------------
+    HEADER
+    --------------------------------------->
+    <div class="container">
+        <div class="jumbotron jumbotron-fluid mb-3 pt-0 pb-0 bg-lightblue position-relative">
+            <div class="pl-4 pr-0 h-100 tofront">
+                <div class="row justify-content-between">
+                    <div class="col-md-6 pt-6 pb-6 align-self-center">
+
+                        <h1 class="secondfont mb-3 font-weight-bold">{{ articles_header.title }}</h1>
+                        <p class="mb-3">
+                            {{ articles_header.title_caption }}
+                        </p>
+                        <a href="{% url 'article' articles_header.id %}" class="btn btn-dark">पुरा पड्नुहो</a>
+                    </div>
+                    <div class="col-md-6 d-none d-md-block pr-0"
+                         style="background-size:cover;background-image:url({{ articles_header.picture.url }});"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Header -->
+
+
+    <!--------------------------------------
+    MAIN
+    --------------------------------------->
+
+    <div class="container pt-4 pb-4">
+        <div class="row">
+            <div class="col-lg-6">
+                {% for mykey, myvalue in article_for_body.items %}
+                    {% if  mykey == "article_left" %}
+                        <div class="card border-0 mb-4 box-shadow h-xl-300">
+                            <div style="background-image: url({{ myvalue.picture.url }}); height: 150px;    background-size: cover;    background-repeat: no-repeat;"></div>
+                            <div class="card-body px-0 pb-0 d-flex flex-column align-items-start">
+                                <h2 class="h4 font-weight-bold">
+                                    <a class="text-dark"
+                                       href="{% url 'article' myvalue.id %}">{{ myvalue.title }}</a>
+                                </h2>
+                                <p class="card-text">
+                                    {{ myvalue.title_caption }}
+                                </p>
+                                <div>
+                                    <small class="d-block"><a class="text-muted"
+                                                              href="./author.html">{{ myvalue.author.username }}</a></small>
+                                    <small class="text-muted">{{ myvalue.date_created }} </small>
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+
+
+            <div class="col-lg-6">
+                <div class="flex-md-row mb-4 box-shadow h-xl-300">
+                    {% for mykey, myvalue in article_for_body.items %}
+                        {% if mykey == 'article_right1' or mykey == 'article_right2' or mykey == 'article_right3' %}
+                            <div class="mb-3 d-flex align-items-center">
+                                <img height="80" src="{{ myvalue.picture.url }}">
+                                <div class="pl-3">
+                                    <h2 class="mb-2 h6 font-weight-bold">
+                                        <a class="text-dark"
+                                           href="{% url 'article' myvalue.id %}">{{ myvalue.title }}</a>
+                                    </h2>
+                                    <div class="card-text text-muted small">
+                                        {{ myvalue.title_caption }}
+                                    </div>
+                                    <small class="text-muted">{{ myvalue.date_created }}</small>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row justify-content-between">
+            <div class="col-md-8">
+                <h5 class="font-weight-bold spanborder"><span>सबै समाचारहरु</span></h5>
+                {% for article in all_post %}
+                    <div class="mb-3 d-flex justify-content-between">
+                        <div class="pr-3">
+                            <h2 class="mb-1 h4 font-weight-bold">
+                                <a class="text-dark" href="{% url 'article' article.id %}">{{ article.title }}</a>
+                            </h2>
+                            <p>
+                                {{ article.title_caption }}
+                            </p>
+                            <div class="card-text text-muted small">
+                                {{ article.author.user.first_name }} {{ article.author.user.last_name }}
+                            </div>
+                            <small class="text-muted">{{ article.date_created }}</small>
+                        </div>
+                        <img height="120" src="{{ article.picture.url }}">
+                    </div>
+                {% endfor %}
+                <button class="btn btn-primary form-control">सबै पद्द्नुह्होस</button>
+            </div>
+            {#            API section of forex and nepali pattro #}
+            <div class="col-md-4 pl-4">
+                <h5 class="font-weight-bold spanborder"><span>API</span></h5>
+                <div class="text-center">आजको मिती</div>
+                <iframe src="https://www.hamropatro.com/widgets/calender-medium.php" frameborder="0" scrolling="no"
+                        marginwidth="0" marginheight="0"
+                        style="border:none; overflow:hidden; width:295px; height:385px;"
+                        allowtransparency="true"></iframe>
+                <a class="weatherwidget-io" href="https://forecast7.com/en/27d7285d32/kathmandu/"
+                   data-label_1="KATHMANDU" data-label_2="WEATHER" data-theme="original">KATHMANDU WEATHER</a>
+                <script>
+                    !function (d, s, id) {
+                        var js, fjs = d.getElementsByTagName(s)[0];
+                        if (!d.getElementById(id)) {
+                            js = d.createElement(s);
+                            js.id = id;
+                            js.src = 'https://weatherwidget.io/js/widget.min.js';
+                            fjs.parentNode.insertBefore(js, fjs);
+                        }
+                    }(document, 'script', 'weatherwidget-io-js');
+                </script>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}

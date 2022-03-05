@@ -1,0 +1,47 @@
+{% extends "admin_templates/adminbase.html" %}
+
+{% block admincontent %}
+    <div class="card mb-4">
+        <div class="card-header">
+            <i class="fas fa-table me-1"></i>
+            <h1 class="text-center"> Articles </h1>
+        </div>
+        <div class="card-body">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Author</th>
+                    <th>Title</th>
+                    <th>Created at</th>
+                    <th>Total views</th>
+                    <th>summary</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for article in articles %}
+                    <tr>
+                        <td>{{ article.author.user.first_name }}</td>
+                        <td>{{ article.title }}</td>
+                        <td>{{ article.date_created }}</td>
+                        <td>{{ article.views_count }}</td>
+                        <td>{{ article.summary }}</td>
+                        {% if article.author.user.username == user.username %}
+                            <td>
+                                <button class="btn btn-primary">Edit</button>
+                            </td>
+                        {% else %}
+                            <td>
+                                <button class="btn btn-dark" disabled>Edit</button>
+                            </td>
+
+                        {% endif %}
+
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+{% endblock admincontent %}

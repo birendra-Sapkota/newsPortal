@@ -1,0 +1,113 @@
+{% extends "admin_templates/adminbase.html" %}
+
+{% block admincontent %}
+    {% if user.is_authenticated %}
+        <h1 class="text-center">Create-Post</h1>
+        {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                    {% if message.tags == 'success' %}
+                        <h6 style="color: green">{{ message }}</h6>
+                    {% elif  message.tags == 'error' %}<h6 style="color: red">{{ message }}</h6>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+        <form action="{% url 'createpost' %}" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container">
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                        <label> Title</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="text" name="title" class="form-control">
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                        <label> Title Caption</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <textarea name="title_caption" class="form-control" rows="5"></textarea>
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                        <label> Cover picture</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <input type="file" name="cover_picture" class="form-control-file">
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                        <label> Article tag</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <select class="form-select form-select-sm" name="tag" aria-label=".form-select-sm example">
+                            <option selected value="all">All</option>
+                            <option value="Politics">Politics</option>
+                            <option value="Economics">Economics</option>
+                            <option value="International">International</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Technology">Technology</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-2">
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                        <label> Article Content</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <textarea name="content" class="form-control" rows="10"></textarea>
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                        <label> Article summary</label>
+                    </div>
+                    <div class="col-sm-8">
+                        <textarea name="summary" class="form-control" rows="6"></textarea>
+                    </div>
+                    <div class="col-sm-2">
+
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 10px">
+                    <div class="col-sm-1"></div>
+                    <div class="col-sm-1">
+                    </div>
+                    <div class="col-sm-9 ">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                    <div class="col-sm-1">
+                    </div>
+                </div>
+            </div>
+
+        </form>
+
+    {% endif %}
+{% endblock admincontent %}
